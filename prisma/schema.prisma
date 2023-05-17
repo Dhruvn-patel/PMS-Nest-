@@ -21,21 +21,32 @@ model User {
 }
 
 model Roles {
-  id       Int    @id @default(autoincrement())
-  rolename String
+  id               Int                @id @default(autoincrement())
+  rolename         String
+  roles            UserRoles[]
+  Rolespermissions RolesPermissions[]
 }
 
 model UserRoles {
-  id     Int   @id @default(autoincrement())
-  User   User? @relation(fields: [userId], references: [id])
-  userId Int?
+  id      Int    @id @default(autoincrement())
+  User    User?  @relation(fields: [userId], references: [id])
+  userId  Int?
+  Roles   Roles? @relation(fields: [rolesId], references: [id])
+  rolesId Int?   @default(2)
 }
 
 model Permissions {
-  id             Int    @id @default(autoincrement())
-  permissionName String
+  id               Int                @id @default(autoincrement())
+  permissionName   String
+  RolesPermissions RolesPermissions[]
 }
 
-// model RolesPermissions {
-
-// }
+model RolesPermissions {
+  id            Int          @id @default(autoincrement())
+  Roles         Roles?       @relation(fields: [rolesId], references: [id])
+  rolesId       Int?
+  Permissions   Permissions? @relation(fields: [permissionsId], references: [id])
+  permissionsId Int?
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @default(now()) @updatedAt
+}

@@ -17,10 +17,13 @@ export class SignupService {
                 data: {
                     email: email,
                     name: name,
-                    password: hashpassword
+                    password: hashpassword,
+                    userRoles: {
+                        create: [{
+                        }]
+                    },
                 }
             })
-
         } catch (error) {
             console.log(error.message);
             return error;
