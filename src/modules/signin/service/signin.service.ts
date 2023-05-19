@@ -52,9 +52,8 @@ export class SigninService {
         return token;
     }
 
-
     async googleLogin(req: Request) {
-        if (!req.user) {
+        if (!req.user) {    
             return 'No user from google'
         }
         return {

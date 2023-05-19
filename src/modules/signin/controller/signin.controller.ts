@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, Render, Req, Request, Response, UseGuards, ValidationPipe } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { AuthGuard } from '@nestjs/passport';
+import { AuthGuard } from 'src/modules/guards/jwt.guard';
+// import { AuthGuard } from '@nestjs/passport';
 import { AuthLoginDto } from '../dto/authlogin.dto';
 import { SigninService } from '../service/signin.service';
 
@@ -10,19 +11,18 @@ export class SigninController {
     private readonly jwtService: JwtService) { }
 
   /* ejs of login */
-  // @Get()
-  // @Render('signin')
-  // root() {
-  //   return;
-  // }
-
-  @UseGuards(AuthGuard('jwt'))
-  @Get('dash')
-  @Render('dashboard')
+  @Get()
+  @Render('signin')
   root() {
-    return
+    return;
   }
 
+  // @Get('dash')
+  /* use custom Guard  */
+  // @UseGuards(AuthGuard)
+
+  /* use passportjs Guard */
+  // @UseGuards(AuthGuard('jwt)) 
 
 
   @Post()
@@ -35,6 +35,7 @@ export class SigninController {
         secret: process.env.JWT_SECRET,
       }
     );
+    console.log("tokern ejr", verfiytoken);
 
     return getToken;
   }
@@ -49,5 +50,7 @@ export class SigninController {
   //   return this.signinService.googleLogin(req)
   // }
 
+
+  
 }
 

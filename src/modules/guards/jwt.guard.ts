@@ -12,6 +12,7 @@ import { Request } from 'express';
 export class AuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) { }
 
+
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const token = request.cookies['JWT_TOKEN'];
@@ -40,4 +41,6 @@ export class AuthGuard implements CanActivate {
         const [type, token] = request.headers.authorization?.split(' ') ?? [];
         return type === 'Bearer' ? token : undefined;
     }
+
+
 }

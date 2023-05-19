@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            background-color: #333;
+            color: #fff;
+        }
+        header a{
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+        }
+        header a:hover{
+            background-color: #fff;
+            color: #333;
+        }
+        .container{
+            margin: 20px;
+        }
+        table{
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td{
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even){
+            background-color: #f2f2f2;
+        }
+        th{
+            background-color: #333;
+            color: #fff;
+        }
+        .model-container{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.5);
+            visibility: hidden;
+            
+
+        }
+        .model{
+            width: 500px;
+            background-color: #fff;
+            padding: 3rem;
+            border-radius: 5px;
+
+        }
+        .model input{
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        .model input[type="submit"]{
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .model input[type="submit"]:hover{
+            background-color: #fff;
+            color: #333;
+        }
+        .model-container-form{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: rgba(0,0,0,0.5);
+            visibility: hidden;
+            
+
+        }
+
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+        <a href="/auth/logout">Logout</a>
+        <a href="/admin/addproduct">Add Product</a>
+        <a href="/admin/addcategory">Add Category</a>
+        <a><p id="add">Add Users</p></a>
+    </header>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Google Id</th>
+                    <th>Role</th>
+                    <th>Delete</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+                    
+            <tbody id="tbody">
+                
+                   
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div class="model-container">
+        <div class="model">
+            <div onclick="document.querySelector('.model-container').style.visibility = 'hidden'"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+            <form id="updateForm">
+                Id<input type="text" name="id" id="id" disabled>
+                Name<input type="text" name="name" id="name">
+                Email<input type="email" name="email" id="email">
+                Role<input type="text" name="roleId" id="roleId">
+                <input type="submit" name="submit" value="Update">
+            </form>
+        </div>
+    </div>
+    <div class="model-container-form">
+        <div class="model">
+            <div onclick="document.querySelector('.model-container-form').style.visibility = 'hidden'"><i class="fa fa-window-close" aria-hidden="true"></i></div>
+            <form id="addForm">
+                Name<input type="text"  id="nameId">
+                Email<input type="email"  id="emailId">
+                Password <input type="password" id="password">
+                Role ID<input type="number" id="userroleId">
+                <input type="submit" name="submit" value="Add">
+            </form>
+        </div>
+    </div>
+
+    <script>
+        window.onload = ()=>{
+            getUsers();
+        }
+
+        const tbody = document.getElementById('tbody');
+
+        const getUsers = async ()=>{
+            const users = await axios.get('http://localhost:3000/admin/users');
+
+            var html = '';
+            users.data.forEach(user => {
+                html += `
+                    <tr>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.googleId}</td>
+                        <td>${user.roleId}</td>
+                        <td><button onclick="deleteUser(${user.id})">delete</button></td>
+                        <td><button onclick="editUser(${user.id})">edit</button></td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+            
+        }
+
+        const deleteUser = async (id) => {
+            try {
+                const res = await axios.delete(`http://localhost:3000/admin/user/delete/${id}`);
+            } catch (error) {
+                console.log(error);
+            }
+            getUsers();
+        }
+
+        const editUser = async (id) => {
+            const res = await axios.get(`http://localhost:3000/admin/user/${id}`);
+            const user = res.data;
+            document.getElementById('id').value = user.id;
+            document.getElementById('name').value = user.name;
+            document.getElementById('email').value = user.email;
+            document.getElementById('roleId').value = user.roleId;
+            document.querySelector('.model-container').style.visibility = 'visible';
+
+            const form = document.querySelector('#updateForm');
+            form.addEventListener('submit', async (e)=>{
+                e.preventDefault();
+                const res = await axios.patch(`http://localhost:3000/admin/user/update/${id}`, {
+                    id: document.getElementById('id').value,
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    roleId: document.getElementById('roleId').value
+                });
+                document.querySelector('.model-container').style.visibility = 'hidden';
+                getUsers();
+                
+            })
+        }
+
+        const add = document.getElementById("add");
+        add.addEventListener('click',()=>{
+            document.querySelector('.model-container-form').style.visibility = 'visible';
+        })
+        const addForm = document.querySelector('#addForm');
+        addForm.addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const nameValue = document.getElementById('nameId').value;
+            const emailValue = document.getElementById('emailId').value;
+            const passwordValue = document.getElementById('password').value;
+            const roleIdValue = document.getElementById('userroleId').value;
+            const res = await axios.post("http://localhost:3000/admin/user/add",{
+                name: `${nameValue}`,
+                email:  `${emailValue}`,
+                password: `${passwordValue}`,
+                roleId: `${roleIdValue}`
+            });
+            document.querySelector('.model-container-form').style.visibility = 'hidden';
+            getUsers();
+            });
+
+      
+
+    </script>
+
+</body>
+
+
+</html>
