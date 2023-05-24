@@ -9,6 +9,9 @@ const prisma = new PrismaClient()
 @Injectable()
 export class SignupService {
     constructor(private prismService: PrismaService) { }
+
+
+    
     async signUp(authsignupdto: AuthSignUpDto): Promise<any> {
         const { name, email, password } = authsignupdto
         const hashpassword = await bcrypt.hash(password, 10)

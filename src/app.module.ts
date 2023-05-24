@@ -13,6 +13,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { join } from 'path';
+import { ProductsModule } from './modules/products/products.module';
+import { CategoryModule } from './modules/category/category.module';
+import { CartModule } from './modules/cart/cart.module';
 
 
 
@@ -21,7 +24,7 @@ import { join } from 'path';
   imports: [SignupModule, SigninModule, SignoutModule, DashboardModule, HomeModule, ForgetemailModule
     , ConfigModule.forRoot({
       isGlobal: true,
-    }),
+    }), ProductsModule, CategoryModule, CartModule,
     // MailerModule.forRoot({
 
     //   transport: 'smtps://user@domain.com:pass@smtp.domain.com',

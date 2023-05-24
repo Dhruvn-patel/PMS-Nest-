@@ -50,3 +50,33 @@ model RolesPermissions {
   createdAt     DateTime     @default(now())
   updatedAt     DateTime     @default(now()) @updatedAt
 }
+
+model Product {
+  id              Int               @id @default(autoincrement())
+  ProductName     String
+  description     String?
+  image           String            @default("")
+  price           Int               @default(0)
+  createdAt       DateTime?         @default(now())
+  updatedAt       DateTime?         @default(now())
+  deletedAt       DateTime?
+  ProductCategory ProductCategory[]
+}
+
+model Categories {
+  id              Int               @id @default(autoincrement())
+  name            String
+  createdAt       DateTime?         @default(now())
+  updatedAt       DateTime?         @default(now())
+  deletedAt       DateTime?
+  ProductCategory ProductCategory[]
+}
+
+model ProductCategory {
+  Categories   Categories? @relation(fields: [categoriesId], references: [id])
+  categoriesId Int
+  Product      Product?    @relation(fields: [productId], references: [id])
+  productId    Int
+
+  @@id([productId, categoriesId])
+}

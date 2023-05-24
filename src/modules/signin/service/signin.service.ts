@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { Request, Response } from 'express';
@@ -20,23 +20,23 @@ export class SigninService {
                     email: email
                 }
             })
-            /* check user exists or not */
-            if (!user) {
-                throw new BadRequestException('Wrong credentials');
-            }
-            const hashedpassword = user.password;
-            console.log(hashedpassword);
-            /* match password */
-            const ismatch = await bcrypt.compare(password, hashedpassword);
-            if (!ismatch) {
-                throw new BadRequestException('Wrong password');
-            }
 
-            const token = await this.addToken({ userId: user.id, name: user.name, email: user.email });
-            if (!token) {
-                throw new ForbiddenException('Counld not signin')
+            /* check user exists or not */
+            if (user == null) {
+                return new UnauthorizedException();
             }
-            return token;
+            else {
+                const hashedpassword = user.password;
+                console.log(hashedpassword);
+                /* match password */
+                const ismatch = await bcrypt.compare(password, hashedpassword);
+                if (ismatch == false) {
+                    return new BadRequestException();
+                }
+
+                const token = await this.addToken({ userId: user.id, name: user.name, email: user.email });
+                return token;
+            }
         } catch (error) {
 
         }
@@ -53,7 +53,7 @@ export class SigninService {
     }
 
     async googleLogin(req: Request) {
-        if (!req.user) {    
+        if (!req.user) {
             return 'No user from google'
         }
         return {

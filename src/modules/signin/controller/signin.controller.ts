@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Render, Req, Request, Response, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Render, Req, Request, Res, Response, UseGuards, ValidationPipe } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from 'src/modules/guards/jwt.guard';
 // import { AuthGuard } from '@nestjs/passport';
@@ -11,10 +11,15 @@ export class SigninController {
     private readonly jwtService: JwtService) { }
 
   /* ejs of login */
+  // @Get()
+  // @Render('signin')
+  // root() {
+  //   return;
+  // }
+
   @Get()
-  @Render('signin')
-  root() {
-    return;
+  showLogin(@Request() req, @Response() res) {
+    res.render('signin', { emailerror: "" })
   }
 
   // @Get('dash')
@@ -25,19 +30,47 @@ export class SigninController {
   // @UseGuards(AuthGuard('jwt)) 
 
 
+  @HttpCode(HttpStatus.ACCEPTED)
   @Post()
   async signIn(@Body(new ValidationPipe()) authsignin: AuthLoginDto, @Request() req, @Response({ passthrough: true }) res) {
-    const getToken = await this.signinService.signIn(authsignin, req, res);
-    res.cookie('JWT_TOKEN', getToken, { httpOnly: true })
-    const verfiytoken = await this.jwtService.verifyAsync(
-      getToken,
-      {
-        secret: process.env.JWT_SECRET,
-      }
-    );
-    console.log("tokern ejr", verfiytoken);
+    const responseToken = await this.signinService.signIn(authsignin, req, res);
+    res.cookie('JWT_TOKEN', responseToken, { httpOnly: true })
+    // const verfiytoken = await this.jwtService.verifyAsync(
+    //   responseToken,
+    //   {
+    //     secret: process.env.JWT_SECRET,
+    //   }
+    // );
 
-    return getToken;
+    if (responseToken.status === 401) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        errmsg: "email is not registered",
+        data: null,
+        status: HttpStatus.BAD_REQUEST
+      })
+    }
+    else if (responseToken.status === 400) {
+      return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+        errmsg: "password is not correct",
+        data: null,
+        status: HttpStatus.NOT_ACCEPTABLE
+      })
+    }
+    else if (responseToken.statusCode === 400) {
+      return res.status(HttpStatus.NOT_ACCEPTABLE).json({
+        errmsg: "password is empty",
+        data: null,
+        status: HttpStatus.NOT_ACCEPTABLE
+      })
+    }
+    else {
+      return res.status(HttpStatus.ACCEPTED).json({
+        errmsg: "",
+        data: responseToken,
+        status: HttpStatus.ACCEPTED
+      })
+    }
+
   }
 
   // @Get('/google')
@@ -51,6 +84,6 @@ export class SigninController {
   // }
 
 
-  
+
 }
 
