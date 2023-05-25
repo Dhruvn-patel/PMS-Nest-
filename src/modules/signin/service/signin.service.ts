@@ -1,7 +1,7 @@
-import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, HttpStatus, Injectable, NotFoundException, Request, Response, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { Request, Response } from 'express';
+
 import { PrismaService } from 'src/modules/prisma/prisma.service';
 import { AuthLoginDto } from '../dto/authlogin.dto';
 
@@ -13,8 +13,9 @@ export class SigninService {
     /* signin */
     async signIn(authsignindto: AuthLoginDto, req: Request, res: Response): Promise<any> {
         const { email, password } = authsignindto;
-        try {
+        console.log(email, password);
 
+        try {
             const user = await this.prismService.user.findUnique({
                 where: {
                     email: email
@@ -27,22 +28,24 @@ export class SigninService {
             }
             else {
                 const hashedpassword = user.password;
-                console.log(hashedpassword);
+
                 /* match password */
                 const ismatch = await bcrypt.compare(password, hashedpassword);
+                console.log("matches", ismatch);
+
                 if (ismatch == false) {
                     return new BadRequestException();
                 }
-
-                const token = await this.addToken({ userId: user.id, name: user.name, email: user.email });
-                return token;
+                const token = await this.addToken({ name: user.name, email: user.email, roles: user.rolesId });
+                return { token: token, roles: user.rolesId };
             }
         } catch (error) {
-
+            console.log(error.message);
+            return error;
         }
     }
 
-    async addToken(args: { userId: Number, name: string, email: string }) {
+    async addToken(args: { name: string, email: string, roles: number }) {
         const payload = args;
         /* store token  */
         const token = await this.jwtService.signAsync(payload, {
@@ -52,7 +55,8 @@ export class SigninService {
         return token;
     }
 
-    async googleLogin(req: Request) {
+
+    async googleLogin(@Request() req, @Response({ passthrough: true }) res) {
         if (!req.user) {
             return 'No user from google'
         }

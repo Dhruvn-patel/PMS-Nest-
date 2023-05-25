@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, IsNumber } from "class-validator";
 export class AuthLoginDto {
 
     @IsEmail()
@@ -7,5 +7,8 @@ export class AuthLoginDto {
 
     @IsNotEmpty()
     password: string;
+
+    // @IsNumber()
+    // rolesId: Number;
 
 }

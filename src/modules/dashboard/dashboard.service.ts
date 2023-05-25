@@ -46,24 +46,14 @@ export class DashboardService {
   }
 
   async updateUser(user: UserDto, userId: any, req: Request, res: Response) {
-    const { name, email, password, roleId } = user;
+    const { name, email, password } = user;
     try {
       return await this.prismService.user.update({
         where: { id: userId },
         data: {
           name, email, password,
-          userRoles: {
-            update: {
-              where: {
-              
-              },
-              data: {
-                rolesId: roleId
-              }
-            },
-          }
         },
-        include: { userRoles: true },
+
       })
     } catch (error) {
       console.log(error.message);

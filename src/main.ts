@@ -22,14 +22,15 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-
+  const cwd = process.cwd();
+  app.useStaticAssets(cwd + '/public');
+  // app.useStaticAssets(join(__dirname, '../../', 'public'));
+  app.setBaseViewsDir(join(__dirname, '../../', 'views'));
 
 
   app.useGlobalPipes(new ValidationPipe())
   app.use(cookieParser());
-  app.useStaticAssets(join(__dirname, '../../', 'public'));
-  app.useStaticAssets(join(__dirname, '..', 'templates'));
-  app.setBaseViewsDir(join(__dirname, '../../', 'views'));
+
   app.setViewEngine('ejs');
 
 

@@ -10,8 +10,6 @@ const prisma = new PrismaClient()
 export class SignupService {
     constructor(private prismService: PrismaService) { }
 
-
-    
     async signUp(authsignupdto: AuthSignUpDto): Promise<any> {
         const { name, email, password } = authsignupdto
         const hashpassword = await bcrypt.hash(password, 10)
@@ -21,12 +19,9 @@ export class SignupService {
                     email: email,
                     name: name,
                     password: hashpassword,
-                    userRoles: {
-                        create: [{
-                        }]
-                    },
                 }
             })
+            return createUser;
         } catch (error) {
             console.log(error.message);
             return error;

@@ -46,17 +46,18 @@
 						<h5 class="card-title text-center mb-5 fw-light fs-5">Sign Up</h5>
 						<form method="post" action="/signup">
 							<div class="form-floating mb-3">
-								<input type="text" class="form-control" id="Name" name="name" placeholder="Name">
+								<input type="text" class="form-control" id="Name" name="name" placeholder="Name"
+									required>
 								<label for="Name">Name</label>
 							</div>
 							<div class="form-floating mb-3">
 								<input type="email" class="form-control" id="floatingInput" name="email"
-									placeholder="name@example.com">
+									placeholder="name@example.com" required>
 								<label for="floatingInput">Email address</label>
 							</div>
 							<div class="form-floating mb-3">
 								<input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-									name="password">
+									name="password" required>
 								<label for="floatingPassword">Password</label>
 							</div>
 							<div class="d-grid">
@@ -68,6 +69,9 @@
 								<button class="btn btn-danger btn-signup text-uppercase fw-bold" type="submit">
 									<i class="fab fa-google me-2"></i> signup with Google
 								</button>
+							</div>
+							<div class="d-grid mt-3">
+								<p>Are you already registered? <a href="/signin">signin here</a></p>
 							</div>
 						</form>
 					</div>

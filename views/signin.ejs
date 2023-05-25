@@ -5,13 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sigin </title>
+    <title>signin </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
-        crossorigin="anonymous"></script>
-
 
 </head>
 <style>
@@ -44,79 +40,110 @@
                 <div class="card border-0 shadow rounded-3 my-5">
                     <div class="card-body p-4 p-sm-5">
                         <h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
-                        <form onsubmit=" fetchdata(this)">
-                            <div class="form-floating mb-3">
-                                <input type="email" class="form-control" id="floatingInput" name="email"
-                                    placeholder="name@example.com">
-                                <label for="floatingInput">Email address</label>
-                                <span id="errorEmail"></span>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
-                                    name="password">
-                                <span id="errorPassword"></span>
-                                <label for="floatingPassword">Password</label>
-                            </div>
-                            <div class="form-check mb-3">
-                                <label class="form-check-label" for="forgetpassword">
-                                    <a href="#" id="forgetpassword" class="link-danger"> Forget Password ?</a>
-                                </label>
-                            </div>
-                            <div class="d-grid">
-                                <button class="btn btn-primary btn-login text-uppercase fw-bold signin"
-                                    type="submit">Sign
-                                    in</button>
-                            </div>
-                            <hr class="my-4">
-                            <div class="d-grid mb-2">
-                                <button class="btn btn-danger btn-login text-uppercase fw-bold" id="signin"
-                                    type="submit">
-                                    <i class="fab fa-google me-2"></i> Sign in with Google
-                                </button>
-                            </div>
-                        </form>
+
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="name@example.com" required>
+                            <label for="floatingInput">Email address</label>
+                            <span id="errorEmail"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password"
+                                name="password">
+                            <span id="errorPassword" required></span>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-check mb-3">
+                            <label class="form-check-label" for="forgetpassword">
+                                <a href="#" id="forgetpassword" class="link-danger"> Forget Password ?</a>
+                            </label>
+                        </div>
+                        <div class="d-grid">
+                            <input class="btn btn-primary btn-login text-uppercase fw-bold signin" type="submit"
+                                value="Signin" onclick="fetchdata()" />
+                        </div>
+                        <hr class="my-4">
+                        <div class="d-grid mb-2">
+                            <a class="btn btn-danger btn-login text-uppercase fw-bold" id="signin"
+                                href="/signin/auth/googlesignin">
+                                <i class="fab fa-google me-2"></i> Sign in with Google
+                            </a>
+                        </div>
+                        <div class="d-grid mb-2">
+                            <p>Does'nt have an account? <a href="/signup">signup here</a></p>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
     <script>
         const errorEmail = document.getElementById('errorEmail');
         const errorPassword = document.getElementById('errorPassword');
-        const signin = document.getElementById('signin');
+        const inputdata = document.getElementsByClassName('form-control');
+        console.log(inputdata);
+        for (var i = 0; i < inputdata.length; i++) {
+            inputdata[i].addEventListener('input', (e) => {
+                errorEmail.innerHTML = ""
+                errorPassword.innerHTML = ""
+            })
+        }
+        async function fetchdata() {
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            const data = {
+                email: email,
+                password: password,
+            };
 
-        // async function fetchapi() {
-        // const responseData = await fetch('/sigin');
-        // const results = await responseData.json();
-        // console.log(results);
-        // }
-        // fetchapi()
+            const responseData = await fetch('/signin/insert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
 
-        // signin.addEventListener('submit', async (ele) => {
-        //     ele.preventDefault();
-        //     console.log("mfsdlkmfsdlkfmsdlk");
-        // })
+            })
+            const res = await responseData.json();
+            console.log(res);
 
-        async function fetchdata(ele) {
-
-            // ele.preventDefault();
-            console.log(ele.email.value, ele.password.value);
-            // const responseData = await fetch('/signin', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         email: ele.email.value, password: ele.password.value
-            //     })
-
-            // });
-            // const results = await responseData.json();
-            // console.log(JSON.parse(results));
-            // const res = await axios.post('/signin', {
-            //     email: ele.email.value, password: ele.password.value
-            // });
-            // console.log(res);
+            if (res.statusCode == 400) {
+                if (res.message.length == 3) {
+                    errorEmail.innerHTML = res.message[0];
+                    errorEmail.style.color = 'red'
+                    errorPassword.innerHTML = res.message[2];
+                    errorPassword.style.color = 'red'
+                }
+                else if (res.message.length == 2) {
+                    errorPassword.style.color = 'red'
+                    errorEmail.innerHTML = res.message[0];
+                }
+                else if (res.message.length == 1) {
+                    errorEmail.innerHTML = "";
+                    errorPassword.innerHTML = res.message[0];
+                    errorPassword.style.color = 'red'
+                }
+            }
+            else if (res.status == 401) {
+                errorEmail.innerHTML = res.errmsg;
+                errorEmail.style.color = 'red'
+            }
+            else if (res.status == 400) {
+                errorPassword.innerHTML = res.errmsg;
+                errorPassword.style.color = 'red'
+            }
+            else if (res.status == 200) {
+                if (res.roles == 1) {
+                    window.location = '/dashboard'
+                }
+                if (res.roles == 2) {
+                    window.location = '/home'
+                }
+            }
         }
     </script>
 </body>
