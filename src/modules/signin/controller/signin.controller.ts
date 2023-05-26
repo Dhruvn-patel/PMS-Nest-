@@ -45,7 +45,7 @@ export class SigninController {
   // @UseGuards(AuthGuard)
 
   /* use passportjs Guard */
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
 
   @HttpCode(HttpStatus.ACCEPTED)
   @Post('/insert')
@@ -104,8 +104,6 @@ export class SigninController {
   @Get('redirect')
   // @Redirect('/dashboard')
   @UseGuards(AuthGuard('google'))
-
-
   googleAuthRedirect(@Req() req, @Res({ passthrough: true }) res): Promise<any> {
     const googleres = this.signinService.googleLogin(req, res);
 
