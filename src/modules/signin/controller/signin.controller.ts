@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 
 import {
   Body,
@@ -61,12 +62,6 @@ export class SigninController {
         res,
       );
 
-      // const verfiytoken = await this.jwtService.verifyAsync(
-      //   responseToken,
-      //   {
-      //     secret: process.env.JWT_SECRET,
-      //   }
-      // );
 
       if (responseToken.status === 401) {
         console.log('401');

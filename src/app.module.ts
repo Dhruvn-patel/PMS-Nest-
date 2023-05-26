@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Global, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,6 +18,8 @@ import { ProductsModule } from './modules/products/products.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CartModule } from './modules/cart/cart.module';
 import { GoogleStrategy } from './modules/strategies/google.strategy';
+import { UserModule } from './modules/user/user.module';
+
 
 
 
@@ -25,7 +28,7 @@ import { GoogleStrategy } from './modules/strategies/google.strategy';
   imports: [SignupModule, SigninModule, SignoutModule, DashboardModule, HomeModule, ForgetemailModule
     , ConfigModule.forRoot({
       isGlobal: true,
-    }), ProductsModule, CategoryModule, CartModule,
+    }), ProductsModule, CategoryModule, CartModule, UserModule,
     // MailerModule.forRoot({
 
     //   transport: 'smtps://user@domain.com:pass@smtp.domain.com',
@@ -40,6 +43,6 @@ import { GoogleStrategy } from './modules/strategies/google.strategy';
     // })
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, JwtStrategy,GoogleStrategy],
+  providers: [AppService, PrismaService, JwtStrategy, GoogleStrategy],
 })
 export class AppModule { }

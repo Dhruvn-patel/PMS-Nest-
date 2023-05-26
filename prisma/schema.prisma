@@ -23,19 +23,13 @@ model User {
   rolesId   Int       @default(2)
   CartAdd   Cart[]
 }
-  
+
 model Roles {
   id               Int                @id @default(autoincrement())
   rolename         String
   Rolespermissions RolesPermissions[]
   Users            User[]
 }
-
-// model UserRoles {
-//   id     Int   @id @default(autoincrement())
-//   User   User? @relation(fields: [userId], references: [id])
-//   userId Int?
-// }
 
 model Permissions {
   id               Int                @id @default(autoincrement())
