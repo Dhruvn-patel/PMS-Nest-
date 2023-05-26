@@ -9,32 +9,28 @@ const prisma = new PrismaClient();
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
     constructor() {
         super({
-            clientId: process.env.GOOGLE_CLIENT_ID,
-            clientSecret: [process.env.GOOGLE_CLIENT_SECRET],
-            callbackURL: "http://localhost:3030/auth/google",
+            clientID: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.CLIENTSECRET,
+            callbackURL: "http://localhost:3030/signin/redirect",
             scope: ['email', 'profile']
         })
     }
 
     async validate(accessToken: string, refreshToken: string, profile: any, done: VerifyCallback): Promise<any> {
-        const { name, emails, photos } = profile
+        const { name, emails, photos, id } = profile
 
-        console.log(name, emails, photos);
+        // console.log(name, emails, photos);
 
-        const data = {
-            name: name.givenName,
+        const user = {
+            id: id,
             email: emails[0].value,
-            // picture: photos[0].value,
-            password: profile.name.familyName,
+            firstName: name.givenName,
+            lastName: name.familyName,
+            picture: photos[0].value,
+            accessToken
         }
-        const user = await prisma.user.create({
-            data: {
-                name: name.givenName,
-                email: emails[0].value,
-                // picture: photos[0].value,
-                password: profile.name.familyName,
-            }
-        })
+    
+
         done(null, user);
     }
 

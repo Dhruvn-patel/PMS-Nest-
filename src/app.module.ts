@@ -16,6 +16,7 @@ import { join } from 'path';
 import { ProductsModule } from './modules/products/products.module';
 import { CategoryModule } from './modules/category/category.module';
 import { CartModule } from './modules/cart/cart.module';
+import { GoogleStrategy } from './modules/strategies/google.strategy';
 
 
 
@@ -39,6 +40,6 @@ import { CartModule } from './modules/cart/cart.module';
     // })
   ],
   controllers: [AppController],
-  providers: [AppService, PrismaService, JwtStrategy],
+  providers: [AppService, PrismaService, JwtStrategy,GoogleStrategy],
 })
 export class AppModule { }

@@ -10,8 +10,8 @@ export class ProductsService {
 
 
 
-    async addProduct(product: productDto) {
-        const { ProductName, description, price, image } = product;
+    async addProduct(product: productDto, file: Express.Multer.File, categoryId: number) {
+        const { ProductName, description, price, image, quantity } = product;
         try {
             const productdata = await this.prismService.product.create({
                 data: {
@@ -19,11 +19,12 @@ export class ProductsService {
                     description: description,
                     price: price,
                     image: image,
+                    quantity: 1,
                     ProductCategory: {
                         create: {
                             Categories: {
                                 connect: {
-                                    id: 7
+                                    id: Number(categoryId)
                                 }
                             }
                         }

@@ -2,802 +2,160 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="/css/exam.css">
-    <link id="theme-style" rel="stylesheet" href="/css/navbar.css"> -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="css/exam.css"> -->
+  <link rel="stylesheet" href="/css/dashboard.css">
 </head>
-<style>
-    *,
-    *::before,
-    *::after {
-        box-sizing: border-box
-    }
 
-    @media(prefers-reduced-motion: no-preference) {
-        :root {
-            scroll-behavior: smooth
-        }
-    }
-
-    .card-header-chart {
-        cursor: pointer;
-    }
-
-    hr {
-        margin: 1rem 0;
-        color: inherit;
-        border: 0;
-        border-top: 1px solid;
-        opacity: .25
-    }
-
-    #category-info {
-        width: 624px;
-        height: 329px;
-    }
-
-    .app-header {
-        box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
-        border-bottom: 1px solid #e7e9ed;
-        height: 56px;
-        background: #fff
-    }
-
-    .app-user-dropdown img {
-        width: 36px;
-        height: 36px
-    }
-
-    @media(min-width: 576px) {
-        .app-notifications-dropdown .dropdown-menu {
-            width: 400px
-        }
-    }
-
-    @media(min-width: 1200px) {
-        .app-header-inner {
-            margin-left: 250px
-        }
-    }
-
-    @media(max-width: 575.98px) {
-        .search-mobile-trigger {
-            cursor: pointer;
-            -webkit-opacity: .8;
-            -moz-opacity: .8;
-            opacity: .8
-        }
-
-        .search-mobile-trigger:hover {
-            color: #15a362;
-            -webkit-opacity: 1;
-            -moz-opacity: 1;
-            opacity: 1
-        }
-
-        .app-search-box {
-            display: none;
-            position: absolute;
-            left: 0;
-            top: 56px;
-            padding: 0;
-            height: 100vh;
-            background: rgba(0, 0, 0, .5);
-            transition: all .4s ease-in-out
-        }
-    }
-
-    @media(max-width: 575.98px)and (prefers-reduced-motion: reduce) {
-        .app-search-box {
-            transition: none
-        }
-    }
-
-    @media(max-width: 575.98px) {
-        .app-search-box .app-search-form .search-input {
-            border-radius: 0;
-            padding-top: 1.5rem;
-            padding-bottom: 1.5rem
-        }
-
-        .app-search-box .app-search-form .search-btn {
-            top: 7px
-        }
-    }
-
-
-    .app-sidepanel {
-        position: fixed;
-        min-height: 100vh;
-        height: 100%;
-        left: 0;
-        top: 0;
-        font-size: .875rem;
-        border-right: 1px solid #e7e9ed
-    }
-
-    .app-sidepanel .sidepanel-inner {
-        position: relative;
-        z-index: 10;
-        background: #fff;
-        box-shadow: rgba(0, 0, 0, .05) 0px 8px 15px;
-        width: 250px;
-        height: 100%
-    }
-
-    .app-branding {
-        height: 60px;
-        padding-top: 1rem;
-        padding-left: 1rem;
-        margin-bottom: 1rem
-    }
-
-    .app-branding .logo-icon {
-        width: 36px;
-        height: 36px
-    }
-
-    .app-branding .logo-text {
-        color: #252930;
-        font-size: 1.25rem;
-        font-weight: 600;
-        vertical-align: middle
-    }
-
-
-    /* navbar links css */
-    .app-nav {
-        color: #5d6778;
-        display: block;
-        padding: 0;
-        width: 100%
-    }
-
-    .app-nav .nav-link {
-        display: block;
-        padding: .875rem 1rem;
-        color: #252930;
-        position: relative;
-        display: block;
-        padding-left: 3rem;
-        border-left: 3px solid rgba(0, 0, 0, 0)
-    }
-
-
-    /* css for navbar activation link */
-    .app-nav .nav-link.active {
-        color: #4245cb;
-        background: #edfdf6;
-        border-left: 3px solid #4245cb;
-        font-weight: 500
-    }
-
-
-    .app-nav .nav-link:hover {
-        color: #4245cb;
-    }
-
-    .app-nav .nav-icon {
-        position: absolute;
-        left: 1rem;
-        top: .7rem
-    }
-
-    .app-nav .nav-icon .bi {
-        width: 1.25rem;
-        height: 1.25rem
-    }
-
-
-    @media(prefers-reduced-motion: reduce) {
-        .app-nav .submenu-toggle {
-            transition: none
-        }
-    }
-
-    .app-nav .submenu-toggle[aria-expanded=true] .submenu-arrow {
-        color: #252930
-    }
-
-
-    /* css use for enable and disable side panel  */
-    @media(max-width: 1199.98px) {
-        .app-sidepanel {
-            transition: all .4s ease-in-out;
-            left: -400px
-        }
-    }
-
-    @media(max-width: 1199.98px)and (prefers-reduced-motion: reduce) {
-        .app-sidepanel {
-            transition: none
-        }
-    }
-
-    @media(min-width: 1200px) {
-        .app-wrapper {
-            margin-left: 250px
-        }
-    }
-
-    .app {
-        min-height: 100vh;
-        height: 100%;
-        width: 100%;
-        background: #f5f6fe;
-        padding-top: 56px;
-        overflow-x: hidden
-    }
-
-    /* css for card highlight colors */
-    .card-highlight-blue {
-        height: 100%;
-        width: 7px;
-        background-color: rgb(78, 115, 223);
-        border-bottom-left-radius: 3px;
-        border-top-left-radius: 3px;
-    }
-
-    .card-highlight-grren {
-        height: 100%;
-        width: 7px;
-        background-color: rgb(84, 189, 207);
-        border-bottom-left-radius: 3px;
-        border-top-left-radius: 3px;
-    }
-
-    .card-highlight-sky {
-        height: 100%;
-        width: 7px;
-        background-color: rgb(81, 200, 137);
-        border-bottom-left-radius: 3px;
-        border-top-left-radius: 3px;
-    }
-
-    .card-highlight-yellow {
-        height: 100%;
-        width: 7px;
-        background-color: rgb(245, 194, 61);
-        border-bottom-left-radius: 3px;
-        border-top-left-radius: 3px;
-    }
-
-    /* css use for all cards */
-    .app-card {
-        position: relative;
-        background: #fff;
-        border-radius: .25rem
-    }
-
-    .app-card.border-left-decoration {
-        border-left: 3px solid #4245cb;
-    }
-
-
-    .app-card .app-card-link-mask {
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: block;
-        left: 0;
-        top: 0
-    }
-
-    .app-card .app-card-header {
-        border-bottom: 1px solid #e7e9ed
-    }
-
-    .app-card .app-card-title {
-        font-size: 1.125rem;
-        margin-bottom: 0
-    }
-
-    .app-card .card-header-action {
-        font-size: .875rem
-    }
-
-    .app-card .card-header-action a:hover {
-        text-decoration: underline
-    }
-
-    .app-card .form-select-holder {
-        display: inline-block
-    }
-
-    .app-card .btn-close {
-        padding: 1rem
-    }
-
-    .app-card .btn-close:focus {
-        box-shadow: none
-    }
-
-    .app-card-stat {
-        text-align: center
-    }
-
-    .app-card-stat .stats-type {
-        font-size: .875rem;
-        color: #828d9f;
-        text-transform: uppercase
-    }
-
-    .app-card-stat .stats-figure {
-        font-size: 2rem;
-        color: #252930
-    }
-
-    .app-card-stat .stats-meta {
-        font-size: .875rem;
-        color: #828d9f
-    }
-
-
-    .app-card-progress-list .item .title {
-        font-size: .875rem;
-        font-weight: 500
-    }
-
-    .app-card-progress-list .item .meta {
-        font-size: .875rem;
-        color: #828d9f
-    }
-
-    .app-card-progress-list .item-link-mask {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: block;
-        left: 0;
-        top: 0
-    }
-
-    .app-card-stats-table .table {
-        font-size: .875rem
-    }
-
-
-    .app-card-stats-table .stat-cell {
-        text-align: right
-    }
-
-    /* category progress bar */
-    .app-card-progress-list .progress {
-        height: 0.5rem;
-    }
-
-
-
-
-    /* Product css */
-    .question-active {
-        color: green;
-    }
-
-    .question-disable {
-        color: red;
-    }
-
-    body {
-        background-color: rgb(245, 246, 254);
-    }
-
-    .search-input {
-        padding: 10px;
-    }
-
-    .search-input input {
-        width: 100%;
-        margin-left: 10px;
-    }
-
-    .action-btn {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .search-input label {
-        font-size: 20px;
-        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    }
-
-    .exam-search-label {
-        font-size: 30px;
-    }
-
-    .user-exam-status-card {
-        font-size: 17px;
-    }
-
-    .create-exam-button {
-        margin-left: 10px;
-    }
-
-    .blur-card {
-        opacity: 0.5;
-    }
-
-
-    .tab-active {
-        color: white;
-        background-color: green;
-    }
-
-    .tab-disable {
-        color: white;
-        background-color: blue;
-    }
-</style>
 
 <body onload="navbar_changer('Products')">
-    <section>
-        <%- include('navbar.ejs') %>
-
-            <div class="app-wrapper">
-                <div class="container-fluid  app-content pt-3 p-md-3 p-lg-4">
-
-                    <div class="action-btn my-3">
-                        <div class="create-exam-button">
-                            <a type="button" class="btn btn-success" onclick="showAddExamModal()">Create Product</a>
-                        </div>
+  <section>
+    <%- include('navbar.ejs') %>
+      <div class="app-wrapper">
+        <section>
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col ">
+              <div class="card align-items-center">
+                <div class="col-md-6 d-flex">
+                  <div class="card-body p-4 p-lg-5 text-black">
+                    <!-- <form enctype="multipart/form-data" onchange="" name="submitData"> -->
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219"></i>
                     </div>
-                    <div class="modal fade" id="question-edit-modal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                        aria-hidden="true">
-                        <div class="modal-dialog mx-0 mx-sm-auto">
-                            <div class="modal-content">
-                                <div class="modal-header bg-primary">
-                                    <h5 class="modal-title text-white" id="exampleModalLabel">Add New Exam</h5>
-                                    <button type="button" class="btn-close text-white" data-mdb-dismiss="modal"
-                                        aria-label="Close" onclick="disableAddExamModal()"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="POST" action="/exams/createExam">
-                                        <div>
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="examname">Exam Name:</label>
-                                                <div class="form-text mb-2">
-                                                    <input class="form-control form-control-sm" type="text"
-                                                        name="examname" id="examname" autocomplete="off"
-                                                        onkeyup="validateExamTitle()">
-                                                </div>
-                                                <small class="warn" id="examname-err"></small>
-                                            </div>
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="examcode">Exam Access Code:</label>
-                                                <div class="form-text mb-2">
-                                                    <input class="form-control form-control-sm" type="text"
-                                                        name="examcode" id="examcode" autocomplete="off"
-                                                        onkeyup="validateExamAccessCode()">
-                                                </div>
-                                                <small class="warn" id="examcode-err"></small>
-                                            </div>
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="totalque">Total Questions:</label>
-                                                <div class="form-text mb-2">
-                                                    <input class="form-control form-control-sm" type="number" min="1"
-                                                        name="totalque" id="totalque" autocomplete="off"
-                                                        onkeyup="validateExamQuestion()">
-                                                </div>
-                                                <small class="warn" id="totalque-err"></small>
-                                            </div>
-                                            <div class="form-outline mb-4">
-                                                <label class="form-label" for="duration">Duration Of Exam:</label>
-                                                <div class="form-text mb-2">
-                                                    <input class="form-control form-control-sm" type="number" min="10"
-                                                        name="duration" id="duration" autocomplete="off"
-                                                        onkeyup="validateExamDuration()">
-                                                </div>
-                                                <small class="warn" id="duration-err"></small>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary" id="create-exam-btn"
-                                                disabled>Submit</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+
+                    <h2 class="fw-normal mb-3 pb-3">
+                      Add Product
+                    </h2>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example17">Product Name :</label>
+                      <input type="text" name="productName" id="productName" class="form-control form-control-lg" />
+                      <p id="producterror" class="error"></p>
                     </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example17">Category :</label>
+                      <select class="form-select" aria-label="Default select example" name="categoryId" id="categoryId">
+                        <p id="errorCategory" class="error"></p>
+                        <option value="" selected>Select your category</option>
+
+
+                        <%for(let i=0;i<categories.length;i++){%>
+                          <option value="<%=categories[i].id%>" name="categoriesgoryId">
+                            <%=categories[i].name%>
+                          </option>
+
+                          <%}%>
+                      </select>
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example17">Product Description:</label>
+                      <textarea name="" id="productDesc" cols="10" rows="5"
+                        class="form-control form-control-lg"></textarea>
+                      <p id="productDescerror" class="error"></p>
+                    </div>
+                    <label class="form-label" for="form2Example17">Product Price</label>
+                    <div class="form-outline mb-4">
+                      <input type="number" name="productPrice" id="productPrice" class="form-control form-control-lg" />
+
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example17"> Quantity</label>
+                      <input type="number" name="Quantity" id="productQuantity" class="form-control form-control-lg" />
+
+                    </div>
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="form2Example17">Product Image</label>
+                      <input type="file" name="productImage" id="productImage" class="form-control form-control-lg" />
+                    </div>
+                    <div class="pt-1 mb-4">
+                      <input type="submit" value="Add Product" class="btn btn-dark btn-lg btn-block"
+                        onclick="submitData()" />
+                    </div>
+                    <!-- </form> -->
+                  </div>
                 </div>
+              </div>
             </div>
-    </section>
-    <script>
-        /* Navbar js */
-        function navbar_changer(nav_item) {
-            let navbar_item = document.getElementById(nav_item);
-            let navbar_item_Classname = document.getElementsByClassName('nav-link');
-            for (let index = 0; index < navbar_item_Classname.length; index++) {
-                navbar_item_Classname[index].classList.remove("active");
-            }
-            navbar_item.classList.add("active");
-        }
+          </div>
 
+        </section>
+        <script>
+          let validateProductTitle_flag = 0, validateQunatity_flag = 0, validatePrice_flag = 0, validateDesc_flag = 0,
+            validate_category = 0;
+          let caterror = document.getElementById('errorCategory');
+          let producterror = document.getElementById('producterror');
+          let productDescerror = document.getElementById('productDescerror');
 
-        /* create-product */
-        const createExamBtn = document.getElementById("create-exam-btn");
-        const totalqueErr = document.getElementById("totalque-err");
-        const examcodeErr = document.getElementById("examcode-err");
-        const durationErr = document.getElementById("duration-err");
-        const examnameErr = document.getElementById("examname-err");
+          function validationcategory() {
 
-        let validateExamTitle_flag = 0, validateExamAccessCode_flag = 0, validateExamDuration_flag = 0, validateExamQuestion_flag = 0;
-        async function validateExamTitle() {
-            const examname = document.getElementById("examname").value.trim();
-            let res = await fetch(`/exams/checkexamname?examname=${examname}`);
-            let examnamechk = await res.json();
-            if (examname == '') {
-                examnameErr.innerHTML = 'Please enter exam title';
-                validateExamTitle_flag = 0;
-            } else if (examname.length < 6) {
-                examnameErr.innerHTML = 'Please enter exam title greater than 6 character';
-                validateExamTitle_flag = 0;
-            } else if (examnamechk['no_of_exam'] > 0) {
-                examnameErr.innerHTML = 'title already exists';
-                validateExamTitle_flag = 0;
+            if (catedata == undefined || catedata === "") {
+              caterror.innerText = '*Please select the category ';
+              caterror.style.color = 'red';
+              validate_category = 0;
             }
             else {
-                examnameErr.innerHTML = "";
-                validateExamTitle_flag = 1;
-            }
-            validateInfo();
-        }
-
-        function validateExamAccessCode() {
-
-            const examcode = document.getElementById("examcode").value.trim();
-            if (examcode == '') {
-                examcodeErr.innerHTML = 'Please enter exam access code';
-                validateExamAccessCode_flag = 0;
-            } else if (examcode.length > 6) {
-                examcodeErr.innerHTML = 'Please enter 6 character access code';
-                validateExamAccessCode_flag = 0;
-            } else {
-                examcodeErr.innerHTML = "";
-                validateExamAccessCode_flag = 1;
-            }
-            validateInfo();
-        }
-
-
-        function validateExamDuration() {
-
-            const duration = document.getElementById("duration").value.trim();
-            if (duration.length <= 0) {
-                durationErr.innerHTML = 'Please enter exam duration';
-                validateExamDuration_flag = 0;
-            } else {
-                durationErr.innerHTML = "";
-                validateExamDuration_flag = 1;
-            }
-            validateInfo();
-        }
-
-
-        function validateExamQuestion() {
-            const totalque = document.getElementById("totalque").value.trim();
-            if (totalque == '') {
-                totalqueErr.innerHTML = 'Please enter exam total question';
-                validateExamQuestion_flag = 0;
-            } else {
-                totalqueErr.innerHTML = "";
-                validateExamQuestion_flag = 1;
-            }
-            validateInfo();
-        }
-
-        function validateInfo() {
-            if (validateExamQuestion_flag == 1 && validateExamDuration_flag == 1 && validateExamAccessCode_flag == 1 && validateExamTitle_flag == 1) {
-                durationErr.innerHTML = "";
-                totalqueErr.innerHTML = "";
-                examcodeErr.innerHTML = "";
-                examnameErr.innerHTML = "";
-                enableBtn();
-            } else {
-                disableBtn();
-            }
-        }
-
-        function disableBtn() {
-            createExamBtn.disabled = true;
-        }
-
-        function enableBtn() {
-            createExamBtn.disabled = false;
-        }
-
-
-        async function toggleSwitch(exam_id) {
-
-            const toggleRequest = await fetch(`/exams/status/?id=${exam_id}`)
-        }
-
-        async function Search(str) {
-
-
-            const flag = document.getElementById("filter-box").value;
-
-            var searching = document.getElementById("search").value;
-
-            var res = await fetch(`/exams/filter-exam/?search=${str}&flag=${flag}`);
-            var data = await res.json();
-            var value = data.exam;
-
-            var tbody = document.getElementById("table");
-
-            var content = ``;
-
-            let count = 1;
-            var switch_content = ``;
-            value.forEach(element => {
-                var status = element.exam_isActive;
-                var exam_id = element.exam_id;
-                var status_content = ``;
-
-                if (status == 'yes') {
-                    status_content += 'checked';
-                } else {
-                    status_content += '';
-                }
-
-                content += '<tr>'
-                content += `
-          <td> ${count}</td>
-          <td> ${element.exam_name} </td>
-          <td> ${element.exam_access_code} </td>
-          <td> ${element.exam_total_question} </td>
-          <td> ${element.createdDate} </td>
-          <td>
-           <div class="form-check form-switch">
-                  <input class="form-check-input switch" type="checkbox" role="switch"
-                    onchange="toggleSwitch('${exam_id}')" ${status_content}>
-            </div>
-          </td>
-          <td>
-               <a href="/result/student/?exam_id=${exam_id}">View Result</a>
-          </td>
-            
-          `
-
-
-                content += '</tr>'
-                count++;
-            });
-
-
-            tbody.innerHTML = content;
-
-        }
-
-        async function result(exam_name) {
-            var res = await fetch(`/result/results/student/?exam_name=${exam_name}`);
-        }
-
-        function showAddExamModal() {
-            var questionModal = document.getElementById("question-edit-modal");
-            questionModal.classList.add("show");
-            questionModal.style.display = "block";
-            questionModal.classList.add("modal-open");
-        }
-
-
-        function disableAddExamModal() {
-            var questionModal = document.getElementById("question-edit-modal");
-
-            questionModal.classList.remove("show");
-            questionModal.style.display = "none";
-            questionModal.classList.remove("modal-open");
-        }
-
-        async function examID(id, link) {
-
-            const tabId = link.id;
-
-            const tab = document.getElementById(tabId);
-
-            var allPageLink = document.getElementsByClassName("pagination-tab");
-
-            for (let i = 0; i < allPageLink.length; i++) {
-                allPageLink[i].classList.remove('tab-active');
+              caterror.innerText = ' ';
+              validate_category = 1
             }
 
-            tab.classList.add('tab-active');
+          }
+
+          function validationproduct() {
 
 
-            var exam_id = await fetch(id);
-            var result = await exam_id.json();
-            var exam_data = result.exam_data;
-
-
-            var questionStatus = result.status;
-
-            var exam_table_string = "";
-
-            var exam_table = document.getElementById('exam_table');
-
-            exam_table_string += `
-      <thead>
-        <tr>
-          <th>No</th>
-          <th scope="col">Exam Title</th>
-          <th scope="col">Access Code</th>
-          <th scope="col">Total Question</th>
-          <th scope="col">CreateDate</th>
-          <th scope="col">Status</th>
-          <th scope="col">Result</th>
-          <th scope="col">View Questions</th>
-        </tr>
-      </thead>
-      `;
-
-            for (let i = 0; i < exam_data.length; i++) {
-
-                var questionText = "";
-                if (questionStatus[i]) {
-                    questionText += 'text-success'
-                } else {
-                    questionText += 'text-danger'
-                }
-
-                var switchStatus = "";
-
-                if (exam_data[i].exam_isActive == 'yes') {
-                    switchStatus += 'checked';
-                }
-
-                exam_table_string += `
-          <tbody id="table">
-        
-          <tr>
-            <td>
-              ${exam_data[i].exam_id}
-            </td>
-            <td>
-               ${exam_data[i].exam_name}
-            </td>
-            <td>
-              ${exam_data[i].exam_access_code}
-            </td>
-            <td>
-              ${exam_data[i].exam_total_question}
-            </td>
-            <td>
-              ${exam_data[i].createdDate} 
-            </td>
-            <td>
-              <div class="form-check form-switch">
-                <input class="form-check-input switch" type="checkbox" role="switch"
-                  onchange="toggleSwitch('${exam_data[i].exam_id}')" ${switchStatus} flexSwitchCheckDefault>`;
-                exam_table_string += `
-              </div>
-            </td>
-            <td>
-              <a href="/result/student/?examId=${exam_data[i].exam_id}"> View Result</a>
-            </td>
-            <td>
-              <a href="/exams/displaySelectQuestion/?exam_id=${exam_data[i].exam_id}" id="${exam_data[i].exam_id}" 
-              class="${questionText}">
-                View Question
-              </a>
-            </td>
-              
-          </tr>
-          
-      </tbody>           
-          `;
-
-                exam_table.innerHTML = exam_table_string;
+            console.log(proddata);
+            if (proddata == "") {
+              producterror.innerText = '*Please select the category ';
+              producterror.style.color = 'red';
+              validateProductTitle_flag = 0
+            }
+            else {
+              producterror.innerText = ' ';
+              validateProductTitle_flag = 1
             }
 
-        }
-    </script>
+
+          }
+
+          async function submitData() {
+
+            let proddata = document.getElementById('productName').value;
+            let productDesc = document.getElementById('productDesc').value;
+            let cateIddata = document.getElementById('categoryId').value;
+            let productQuantity = document.getElementById('productQuantity').value;
+            let productPrice = document.getElementById('productPrice').value;
+            let productImage = document.getElementById('productImage').value;
+            console.log(proddata, productDesc, cateIddata, productQuantity, productPrice, productImage);
+
+            const data = {
+              ProductName: proddata,
+              description: productDesc,
+              price: productPrice,
+              quantity: productQuantity,
+              categoryId: cateIddata
+            }
+            const response = await fetch("/products/addProduct", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                data: data
+              })
+            })
+
+            const datares = await response.json();
+            console.log(datares);
+          }
+        </script>
+      </div>
+  </section>
+  <script src="/js/navbar.js"></script>
+  <script src="/js/product.js"></script>
 </body>
 
 </html>

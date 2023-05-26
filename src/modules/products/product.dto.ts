@@ -8,4 +8,6 @@ export class productDto {
 
     @IsNumber()
     price: number;
+    quantity: number;
+    categoryId: number;
 }

@@ -9,6 +9,14 @@ export class CategoryController {
   constructor(private readonly categoryService: CategoryService,
   ) { }
 
+  @Get()
+  findAllCategory() {
+    return this.categoryService.getAllCategory();
+  }
+  @Get(':id')
+  findCategoryById(@Param('id',new ValidationPipe()) categoryId: number) {
+    return this.categoryService.getAllCategoryId(categoryId);
+  }
   @Post('addCategory')
   async addCategory(@Body(new ValidationPipe()) categoryRes: categoryDto) {
     return this.categoryService.addCategory(categoryRes)

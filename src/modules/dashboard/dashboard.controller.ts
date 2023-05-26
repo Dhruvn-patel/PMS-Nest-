@@ -10,12 +10,5 @@ export class DashboardController {
     return;
   }
 
-  @Get('/Products')
-  // @Render('products')
-  // getUsers() {
-  //   r
-  // }
-  getUsers(@Request() req, @Response() res) {
-    return res.render('products')
-  }
+
 }

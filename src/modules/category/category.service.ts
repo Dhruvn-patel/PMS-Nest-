@@ -21,9 +21,25 @@ export class CategoryService {
             return error;
         }
     }
-
-
-
+    async getAllCategoryId(categoryId: number): Promise<any> {
+        const data = await this.prismService.categories.findUnique({
+            where: { id: Number(categoryId) },
+            select: {
+                id: true,
+                name: true,
+            }
+        })
+        return data;
+    }
+    async getAllCategory() {
+        const data = await prisma.categories.findMany({
+            select: {
+                id: true,
+                name: true,
+            }
+        });
+        return data;
+    }
     async updateData(updateRes: categoryDto, id: number): Promise<any> {
         const { name } = updateRes;
         try {
