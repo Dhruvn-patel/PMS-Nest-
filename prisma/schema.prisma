@@ -15,11 +15,13 @@ model User {
   email     String    @unique
   name      String
   password  String
+  googleId  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @default(now()) @updatedAt
   deletedAt DateTime?
   Roles     Roles?    @relation(fields: [rolesId], references: [id], onDelete: Cascade)
   rolesId   Int       @default(2)
+  CartAdd   Cart[]
 }
 
 model Roles {
@@ -58,10 +60,12 @@ model Product {
   description     String?
   image           String            @default("")
   price           Int               @default(0)
+  quantity        Int
   createdAt       DateTime?         @default(now())
   updatedAt       DateTime?         @default(now())
   deletedAt       DateTime?
   ProductCategory ProductCategory[]
+  cart            Cart[]
 }
 
 model Categories {
@@ -74,10 +78,21 @@ model Categories {
 }
 
 model ProductCategory {
-  Categories   Categories? @relation(fields: [categoriesId], references: [id])
-  categoriesId Int
-  Product      Product?    @relation(fields: [productId], references: [id])
   productId    Int
+  categoriesId Int
+  Categories   Categories? @relation(fields: [categoriesId], references: [id])
+  Product      Product?    @relation(fields: [productId], references: [id])
 
   @@id([productId, categoriesId])
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  Quantity  Int
+  userId    Int
+  productId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Product   Product  @relation(fields: [productId], references: [id])
 }

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -11,7 +12,7 @@ export class ProductsService {
 
 
     async addProduct(product: productDto) {
-        const { ProductName, description, price, image } = product;
+        const { ProductName, description, price, image,quantity } = product;
         try {
             const productdata = await this.prismService.product.create({
                 data: {
@@ -19,6 +20,7 @@ export class ProductsService {
                     description: description,
                     price: price,
                     image: image,
+                    quantity: 1,
                     ProductCategory: {
                         create: {
                             Categories: {

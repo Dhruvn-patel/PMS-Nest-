@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsEmail, IsNotEmpty, isNumber, IsNumber, IsString } from "class-validator";
 export class productDto {
 
@@ -8,4 +9,5 @@ export class productDto {
 
     @IsNumber()
     price: number;
+    quantity:number;
 }

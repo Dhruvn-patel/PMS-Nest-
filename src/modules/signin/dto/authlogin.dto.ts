@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, IsNumber } from "class-validator";
+/* eslint-disable prettier/prettier */
+import { IsEmail, IsNotEmpty, IsNumber, IsOptional } from "class-validator";
 export class AuthLoginDto {
 
     @IsEmail()
@@ -10,5 +11,7 @@ export class AuthLoginDto {
 
     // @IsNumber()
     // rolesId: Number;
-
+    @IsOptional()
+    googleId:string
+    
 }

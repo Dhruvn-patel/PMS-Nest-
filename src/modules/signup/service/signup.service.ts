@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { HttpStatus, Injectable } from '@nestjs/common';
 import { Prisma, User, PrismaClient } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
@@ -11,7 +12,7 @@ export class SignupService {
     constructor(private prismService: PrismaService) { }
 
     async signUp(authsignupdto: AuthSignUpDto): Promise<any> {
-        const { name, email, password } = authsignupdto
+        const { name, email, password,googleId } = authsignupdto
         const hashpassword = await bcrypt.hash(password, 10)
         try {
             const createUser = await this.prismService.user.create({
@@ -19,6 +20,7 @@ export class SignupService {
                     email: email,
                     name: name,
                     password: hashpassword,
+                    googleId:"",
                 }
             })
             return createUser;
