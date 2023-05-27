@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Res, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Res, Req, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -36,13 +36,35 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+
+  @Patch('update/:id')
+  async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Req() req, @Res() res) {
+    const data = await this.userService.update(id, updateUserDto);
+    if (data.statusCode === 200) {
+      return res.json({
+        errmsg: "",
+        status: 200,
+        data: null
+      })
+    }
+  }
+  @Delete('remove/:id')
+  async remove(@Param('id', new ValidationPipe()) id: number, @Req() req, @Res() res) {
+    const data = await this.userService.remove(id);
+    if (data.statusCode === 403) {
+      return res.json({
+        errmsg: "admin account only one user",
+        status: 403,
+        data: null
+      })
+    }
+    else if (data.statusCode === 200) {
+      return res.json({
+        errmsg: "",
+        status: 200,
+        data: null
+      })
+    }
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
-  }
 }

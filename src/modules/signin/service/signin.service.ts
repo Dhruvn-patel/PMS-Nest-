@@ -82,9 +82,16 @@ export class SigninService {
 
     async googleLogin(@Req() req, @Res() res) {
 
-        if (!req.user) {
+        if (!req.user.email) {
             return 'No user from google';
         }
+
+        const tokendata = await this.addToken({
+            name: req.user.firstName,
+            email: req.user.email,
+            roles: 2,
+        });
+        res.cookie('JWT_TOKEN', tokendata, { httpOnly: true });
         await prisma.user.upsert({
             where: {
                 email: req.user.email
@@ -95,12 +102,12 @@ export class SigninService {
                 email: req.user.email,
                 password: '',
                 googleId: req.user.id,
-
             },
         });
         return {
             message: 'User Info from Google',
-            user: req.user
+            user: req.user,
+            tokendata: tokendata
         };
     }
 }

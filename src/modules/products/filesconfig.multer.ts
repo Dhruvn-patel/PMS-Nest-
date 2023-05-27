@@ -5,7 +5,6 @@ export const editFileName = (req, file, callback) => {
     const name = file.originalname.split('.')[0]
     const fileExtensionName = extname(file.originalname)
     const randomeName = Date.now()
-
     callback(null, randomeName + "-" + name + fileExtensionName)
 }
 

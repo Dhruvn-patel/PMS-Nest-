@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js">
+    <link id="theme-style" rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body onload="navbar_changer('AddCategory');userData();">
+    <section>
+        <%- include('navbar.ejs') %>
+            <div class="app-wrapper">
+                <div class="container mt-4">
+                    <div class="action-btn my-3">
+                        <div class="createbtn">
+                            <a type="button" class="btn btn-success" onclick="showCreateModal()">Create Category</a>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Id</th>
+                                    <th>Category Name</th>
+                                    <th width="4%">Option</th>
+                                    <th width="4%"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="userData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal fade" id="create-model" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog mx-0 mx-sm-auto">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-white" id="exampleModalLabel">Add Category</h5>
+                                <button type="button" class="btn-close text-white" data-mdb-dismiss="modal"
+                                    aria-label="Close" onclick="disableCreateModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" onsubmit="createData(); return false;">
+                                    <div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="categoryname">Category Name:</label>
+                                            <div class="form-text mb-2">
+                                                <input class="form-control form-control-sm" type="text"
+                                                    name="categoryname" id="categoryname" autocomplete="off"
+                                                    onkeyup="validateCategoryName()">
+                                            </div>
+                                            <small class="warn" id="categoryname-err"></small>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="createbtn"
+                                            disabled>Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal fade" id="editmodel" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog mx-0 mx-sm-auto">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-white" id="exampleModalLabel">Edit Data</h5>
+                                <button type="button" class="btn-close text-white" data-mdb-dismiss="modal"
+                                    aria-label="Close" onclick="disableModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form" onsubmit=" dataUpdate(); return false;">
+                                    <div>
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="username"> Name:</label>
+                                            <div class="form-text mb-2">
+                                                <input class="form-control form-control-sm" type="text" name="username"
+                                                    id="username" autocomplete="off" onkeyup="validateName()">
+                                            </div>
+                                            <small class="warn" id="username-err"></small>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary" id="usersBtn"
+                                            disabled>Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/category.js"> </script>
+</body>
+
+</html>

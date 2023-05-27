@@ -97,11 +97,11 @@ export class SigninController {
   async googleAuth(@Req() req) { }
 
   @Get('redirect')
-  // @Redirect('/dashboard')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req, @Res({ passthrough: true }) res): Promise<any> {
-    const googleres = this.signinService.googleLogin(req, res);
-
+  async googleAuthRedirect(@Req() req, @Res({ passthrough: true }) res): Promise<any> {
+    const googleres = await this.signinService.googleLogin(req, res);
+    console.log(googleres);
+    
     return res.redirect('/dashboard');
 
   }
