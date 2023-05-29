@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
@@ -104,5 +105,46 @@ export class CategoryService {
       return error;
     }
   }
+
+  async findAllCategoriesPaginated(page: number, pageSize: number): Promise<any> {
+    const skip = (page - 1) * pageSize; // Calculate the number of items to skip
+    const take = pageSize; // Set the number of items to take per page
+
+    const categories = await this.prismService.categories.findMany({
+      skip, // Skip the specified number of items
+      take, // Take the specified number of items
+    });
+
+    return categories;
+  }
+
+  async findAllSortedCategories(sortBy: string, sortOrder: 'ASC' | 'DESC'): Promise<any> {
+    const validColumns = ['id', 'name'];
+
+    if (!validColumns.includes(sortBy)) {
+      throw new Error(`Invalid column for sorting. Valid columns: ${validColumns.join(', ')}`);
+    }
+
+    const categories = await this.prismService.categories.findMany({
+      orderBy: {
+        [sortBy]: sortOrder,
+      },
+    });
+
+    return categories;
+  }
+  async searchCategories(query: string): Promise<any> {
+    const categories = await this.prismService.categories.findMany({
+      where: {
+        name: {
+          contains: query,
+          mode: 'insensitive',
+        },
+      } as Prisma.CategoriesWhereInput,
+    });
+
+    return categories;
+  }
+
 
 }

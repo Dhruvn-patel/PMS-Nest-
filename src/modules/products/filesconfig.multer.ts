@@ -1,3 +1,5 @@
+/* eslint-disable prefer-const */
+/* eslint-disable prettier/prettier */
 import { extname } from "path"
 
 export const editFileName = (req, file, callback) => {

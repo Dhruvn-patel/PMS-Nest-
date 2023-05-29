@@ -6,7 +6,8 @@ import {
     UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Request } from 'express';
+import { Request, response } from 'express';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,7 +20,9 @@ export class AuthGuard implements CanActivate {
         console.log('guaradtoken', token);
 
         if (!token) {
-            throw new UnauthorizedException();
+            // throw new UnauthorizedException();
+            response.redirect('/signin');
+            return false;
         }
         try {
             const payload = await this.jwtService.verifyAsync(
