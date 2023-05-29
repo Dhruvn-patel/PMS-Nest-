@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, ParseIntPipe, Put, Render, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, ParseIntPipe, Put, Render, Req, Res, Query } from '@nestjs/common';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
@@ -46,10 +46,10 @@ export class CategoryController {
       status: 200
     });
   }
-  @Get(':id')
-  findCategoryById(@Param('id', new ValidationPipe()) categoryId: number) {
-    return this.categoryService.getAllCategoryId(categoryId);
-  }
+  // @Get(':id')
+  // findCategoryById(@Param('id', new ValidationPipe()) categoryId: number) {
+  //   return this.categoryService.getAllCategoryId(categoryId);
+  // }
   @Post('addCategory')
   async addCategory(@Body(new ValidationPipe()) categoryRes: CreateCategoryDto, @Req() req, @Res() res) {
     const data = await this.categoryService.addCategory(categoryRes)
@@ -80,4 +80,17 @@ export class CategoryController {
     });
   }
 
+
+  @Get('/search')
+  async search(@Query() params: any, @Req() req, @Res() res) {
+    console.log(params.value);
+
+    const data = await this.categoryService.searchCategories(params.value);
+    console.log(data);
+    return res.status(200).json({
+      data: data,
+      errmsg: "",
+      status: 200
+    });
+  }
 }

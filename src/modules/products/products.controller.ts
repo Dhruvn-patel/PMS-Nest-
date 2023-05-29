@@ -44,10 +44,10 @@ export class ProductsController {
     @Body('description') description: string,
     @Body('price') price: number,
     @Body('quantity') quantity: number,
-    @Body('catagory') categoryIds: string,
+    // @Body('catagory') categoryIds: string,
   ) {
     // console.log(file, name, description, price, categoryIds);
-    return this.productsService.uploadSingleFile(file, name, description, price, quantity, categoryIds);
+    return this.productsService.uploadSingleFile(file, name, description, price, quantity, "1,2,3");
   }
 
 
@@ -76,18 +76,19 @@ export class ProductsController {
   }
 
 
-
-
   @Get()
   async getUsers(@Request() req, @Response() res) {
     const categories = await this.categoryService.getAllCategory()
     return res.render('products', { categories })
   }
+
+  @Get()
+  async findallProduct() {
+    const data = await this.productsService.findAllProductsWithCategoryAndSort('name', 'ASC');
+    console.log(data);
+
+  }
 }
 
 
 
-/* 
-
-
-*/

@@ -44,16 +44,16 @@ export class CategoryService {
       return error;
     }
   }
-  async getAllCategoryId(categoryId: number): Promise<any> {
-    const data = await this.prismService.categories.findUnique({
-      where: { id: Number(categoryId) },
-      select: {
-        id: true,
-        name: true,
-      }
-    })
-    return data;
-  }
+  // async getAllCategoryId(categoryId: number): Promise<any> {
+  //   const data = await this.prismService.categories.findUnique({
+  //     where: { id: Number(categoryId) },
+  //     select: {
+  //       id: true,
+  //       name: true,
+  //     }
+  //   })
+  //   return data;
+  // }
   async getAllCategory() {
     const data = await this.prismService.categories.findMany({
       select: {
@@ -62,6 +62,28 @@ export class CategoryService {
       }
     });
     return data;
+
+    /* 
+    // Get the total number of pages
+    const totalPages = Math.ceil(data.length / this.pageSize);
+
+    // Set the current page to 1 by default
+    let currentPage = 1;
+
+    // If the page number is specified in the query string, set the current page to that value
+    if (this.pageNumber) {
+      currentPage = parseInt(this.pageNumber, 10);
+    }
+
+    // Get the data for the current page
+    const currentData = data.slice((currentPage - 1) * this.pageSize, currentPage * this.pageSize);
+
+    // Return the current page data and the total number of pages
+    return {
+      data: currentData,
+      totalPages: totalPages,
+    };  
+    */
   }
   async updateData(updateRes: CreateCategoryDto, id: number): Promise<any> {
     const { name } = updateRes;
@@ -137,12 +159,15 @@ export class CategoryService {
     const categories = await this.prismService.categories.findMany({
       where: {
         name: {
-          contains: query,
-          mode: 'insensitive',
+          contains: `%${query}%`,
+          // mode: "insensitive"
         },
       } as Prisma.CategoriesWhereInput,
+      select: {
+        id: true,
+        name: true
+      }
     });
-
     return categories;
   }
 

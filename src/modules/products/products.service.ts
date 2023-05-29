@@ -8,10 +8,6 @@ const prisma = new PrismaClient()
 @Injectable()
 export class ProductsService {
     constructor(private prismService: PrismaService) { }
-
-
-
-
     async addProduct(product: productDto, categoryId: number) {
         const { ProductName, description, price, image, quantity } = product;
         try {
@@ -121,10 +117,9 @@ export class ProductsService {
     }
 
     async uploadSingleFile(file: Express.Multer.File, ProductName: string, description: string, price: number, quantity: number, categoryIds: string) {
-
-        const categoryIdArray: number[] = categoryIds.split(',')
-            .map((id) => Number(id.trim()))
-            .filter((categoryId) => !isNaN(categoryId));
+        // const categoryIdArray: number[] = categoryIds.split(',')
+        //     .map((id) => Number(id.trim()))
+        //     .filter((categoryId) => !isNaN(categoryId));
 
         // Handle first and last IDs separately
         // if (!isNaN(categoryIdArray[0])) {
@@ -133,30 +128,31 @@ export class ProductsService {
         // if (!isNaN(categoryIdArray[categoryIdArray.length - 1])) {
         //     categoryIdArray.push(categoryIdArray[categoryIdArray.length - 1]);
         // }
+        console.log(ProductName, price, quantity, description);
 
-        const categories = categoryIdArray.map((categoryId) => ({ id: categoryId }));
-        console.log(categories, "categories");
+        // const categories = categoryIdArray.map((categoryId) => ({ id: categoryId }));
+        // console.log(categories, "categories");
 
-        try {
-            return this.prismService.product.create({
-                data: {
-                    ProductName: ProductName,
-                    description,
-                    price: Number(price),
-                    quantity: 12,
-                    image: file.filename,
-                    ProductCategory: {
-                        create: categories.map((category) => ({
-                            Categories: {
-                                connect: category,
-                            },
-                        })),
-                    },
-                },
-            });
-        } catch (error) {
-            throw new Error(error);
-        }
+        // try {
+        //     return this.prismService.product.create({
+        //         data: {
+        //             ProductName: ProductName,
+        //             description,
+        //             price: Number(price),
+        //             quantity: Number(quantity),
+        //             image: file.filename,
+        //             ProductCategory: {
+        //                 create: categories.map((category) => ({
+        //                     Categories: {
+        //                         connect: category,
+        //                     },
+        //                 })),
+        //             },
+        //         },
+        //     });
+        // } catch (error) {
+        //     throw new Error(error);
+        // }
     }
 
 
@@ -195,28 +191,28 @@ export class ProductsService {
     }
 
     /* pagination */
-    async findAllProducts(page: number, pageSize: number) {
-        const skip = (page - 1) * pageSize; // Calculate the number of items to skip
-        const take = pageSize; // Set the number of items to take per page
+    // async findAllProducts(page: number, pageSize: number) {
+    //     const skip = (page - 1) * pageSize; // Calculate the number of items to skip
+    //     const take = pageSize; // Set the number of items to take per page
 
-        const data = await this.prismService.product.findMany({
-            select: {
-                id: true,
-                ProductName: true,
-                description: true,
-                image: true,
-                price: true,
-                quantity: true,
-                ProductCategory: {
-                    select: { categoriesId: true },
-                },
-            },
-            skip, // Skip the specified number of items
-            take, // Take the specified number of items
-        });
+    //     const data = await this.prismService.product.findMany({
+    //         select: {
+    //             id: true,
+    //             ProductName: true,
+    //             description: true,
+    //             image: true,
+    //             price: true,
+    //             quantity: true,
+    //             ProductCategory: {
+    //                 select: { categoriesId: true },
+    //             },
+    //         },
+    //         skip, // Skip the specified number of items
+    //         take, // Take the specified number of items
+    //     });
 
-        return data;
-    }
+    //     return data;
+    // }
 
 
     async findAllProductsWithCategoryAndSort(sortBy: string, sortOrder: 'ASC' | 'DESC') {

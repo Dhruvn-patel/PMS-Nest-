@@ -270,3 +270,51 @@ function EditdisableBtn() {
 function EditenableBtn() {
     userBtn.disabled = false;
 }
+
+
+async function searchQuery(ele)
+{
+   const searchdata=ele.value.trim();
+
+    const responsedata=await fetch(`/category/search?value=${searchdata}`);
+    const alluserData=await responsedata.json();
+
+    document.querySelector('.userData').innerHTML='';
+
+    if (alluserData.status === 200) {
+        let userArray = []
+        userArray = alluserData.data
+        let htmldata = '';
+        userArray.map((element, i) => {
+            htmldata += `<tr>
+            <td>${i + 1}</td>
+            <td>${element.id}</td>
+            <td>${element.name}</td>
+         <td class="mr-2"> <a id="${element.id}" class="d-inline  btn btn-danger"onClick="deleteData(this)">
+         delete
+        </a>
+        </td><td>
+        <a id="${element.id}" class="d-inline p-2 btn btn-primary"onClick="updateData(this);showModal();">
+         edit
+        </a>
+        <td/>
+       </tr> `
+        });
+        let resultdata = document.querySelector('.userData');
+        resultdata.innerHTML = htmldata;
+    }
+}
+userData();
+
+
+const sortdata=document.getElementsByClassName('sort');
+console.log(sortdata);
+
+for (let i = 0; i < sortdata.length; i++) {
+    sortdata[i].addEventListener('click',sortfunction);
+}
+
+async function sortfunction(ele)
+{
+    console.log(ele.target.innerHTML);
+}
