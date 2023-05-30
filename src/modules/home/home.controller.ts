@@ -24,7 +24,7 @@ export class HomeController {
      quantity: 12,
      categoryNames: [ 'Mobile', 'Grocery', 'Cloths' ]
    }
-    
+
     */
     res.render('home', { productdata })
   }

@@ -53,9 +53,6 @@
             </table>
           </div>
         </div>
-
-
-
         <div class="modal fade" id="create-model" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog mx-0 mx-sm-auto">
             <div class="modal-content">
@@ -65,7 +62,7 @@
                   onclick="disableCreateModal()"></button>
               </div>
               <div class="modal-body">
-                <form role="form" action="/products/newAddProduct" method="post" enctype="multipart/form-data">
+                <form role="form" onsubmit="createData(); return false;" enctype="multipart/form-data">
                   <div>
                     <div class="form-outline mb-4">
                       <label class="form-label" for="categoryname">Product Name:</label>

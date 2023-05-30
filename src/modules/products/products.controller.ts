@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put, Render, Req, Request, Response, UploadedFile, UseInterceptors, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseFilePipeBuilder, ParseIntPipe, Post, Put, Render, Req, Request, Response, UploadedFile, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { productDto } from './product.dto';
 import { ProductsService } from './products.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -8,6 +8,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from "path"
 import { destination, editFileName, imageFileFilter } from './filesconfig.multer';
+// import { multipart } from '@nestjs/common/pipes/multipart';
 @ApiTags('Product Module')
 @Controller('products')
 
@@ -29,7 +30,7 @@ export class ProductsController {
   addProduct(@Body(new ValidationPipe()) product: productDto) {
     return this.productsService.addProduct(product, product.categoryId);
   }
-
+  // please write proper code to get dat
   @Post('/newAddProduct')
   @UseInterceptors(FileInterceptor('file', {
     storage: diskStorage({
@@ -44,10 +45,10 @@ export class ProductsController {
     @Body('description') description: string,
     @Body('price') price: number,
     @Body('quantity') quantity: number,
-    // @Body('catagory') categoryIds: string,
+    @Body('catagory') categoryIds: string,
   ) {
     // console.log(file, name, description, price, categoryIds);
-    return this.productsService.uploadSingleFile(file, name, description, price, quantity, "1,2,3");
+    return this.productsService.uploadSingleFile(file, name, description, price, quantity, categoryIds);
   }
 
 

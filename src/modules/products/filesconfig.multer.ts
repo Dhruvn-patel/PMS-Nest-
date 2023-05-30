@@ -3,7 +3,6 @@
 import { extname } from "path"
 
 export const editFileName = (req, file, callback) => {
-
     const name = file.originalname.split('.')[0]
     const fileExtensionName = extname(file.originalname)
     const randomeName = Date.now()
@@ -18,7 +17,14 @@ export const imageFileFilter = (req, file, cb) => {
     } else {
         cb(new Error("Invalid file "));
     }
+
+    if (file.size > 100000000) {
+        cb(new Error('File is too large'));
+    } else {
+        cb(null);
+    }
 }
+
 export const destination = (req, file, cb) => {
     cb(null, "./public/uploads")
 }

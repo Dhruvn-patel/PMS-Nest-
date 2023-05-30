@@ -117,42 +117,42 @@ export class ProductsService {
     }
 
     async uploadSingleFile(file: Express.Multer.File, ProductName: string, description: string, price: number, quantity: number, categoryIds: string) {
-        // const categoryIdArray: number[] = categoryIds.split(',')
-        //     .map((id) => Number(id.trim()))
-        //     .filter((categoryId) => !isNaN(categoryId));
+        const categoryIdArray: number[] = categoryIds.split(',')
+            .map((id) => Number(id.trim()))
+            .filter((categoryId) => !isNaN(categoryId));
+        console.log(categoryIdArray);
 
-        // Handle first and last IDs separately
-        // if (!isNaN(categoryIdArray[0])) {
-        //     categoryIdArray.unshift(categoryIdArray[0]);
-        // }
-        // if (!isNaN(categoryIdArray[categoryIdArray.length - 1])) {
-        //     categoryIdArray.push(categoryIdArray[categoryIdArray.length - 1]);
-        // }
-        console.log(ProductName, price, quantity, description);
+        const categories = categoryIdArray.map((categoryId) => ({ id: Number(categoryId) }));
+        // const categories = categoryIdArray.map((category) => ({
+        //     Categories: { connect: { id: category } },
+        // }));
+        console.log(categories, "categories");
 
-        // const categories = categoryIdArray.map((categoryId) => ({ id: categoryId }));
-        // console.log(categories, "categories");
 
-        // try {
-        //     return this.prismService.product.create({
-        //         data: {
-        //             ProductName: ProductName,
-        //             description,
-        //             price: Number(price),
-        //             quantity: Number(quantity),
-        //             image: file.filename,
-        //             ProductCategory: {
-        //                 create: categories.map((category) => ({
-        //                     Categories: {
-        //                         connect: category,
-        //                     },
-        //                 })),
-        //             },
-        //         },
-        //     });
-        // } catch (error) {
-        //     throw new Error(error);
-        // }
+        try {
+            const data = await this.prismService.product.create({
+                data: {
+                    ProductName: ProductName,
+                    description,
+                    price: Number(price),
+                    quantity: Number(quantity),
+                    image: file.filename,
+                    ProductCategory: {
+                        create: categories.map((category) => ({
+                            Categories: {
+                                connect: category,
+                            },
+                        })),
+                    },
+
+                },
+                include: { ProductCategory: true },
+            });
+            return data;
+        } catch (error) {
+            console.log(error.message);
+
+        }
     }
 
 

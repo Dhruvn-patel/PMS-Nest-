@@ -1,4 +1,4 @@
-async function userData() {
+async function userData() { 
     const response = await fetch('/category/AllCategories');
     alluserData = await response.json();
     if (alluserData.status === 200) {
@@ -144,39 +144,36 @@ function createCategoryData() {
 }
 
 async function createData() {
-const formData = new FormData();
-formData.append('file', price);
-console.log(formFile.files[0]);
-
-
-const selectedValues = Array.from(categoryselect.querySelectorAll("option"))
+    const selectedValues = Array.from(categoryselect.querySelectorAll("option"))
   .filter(option => option.selected)
   .map(option => option.value);
   const categorystring = selectedValues.join(", ");
   console.log(categorystring); 
-    // const responsedata = await fetch('/products/newAddProduct', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         file:formData,
-    //         ProductName: categoryname.value.trim(),
-    //         description:prouductdesc.value.trim(),
-    //         price:price.value ,
-    //         quantity:quantity.value,
-    //         catagory:categorystring
+const formData = new FormData();
+formData.append('file', formFile.files[0]);
+formData.append('ProductName', categoryname.value.trim());
+formData.append('description', prouductdesc.value.trim());
+formData.append('price', price.value);
+formData.append('quantity', quantity.value);
+formData.append('catagory', categorystring);
+console.log("file",formData);
 
-    //     })
-    // })
-    // const results = await responsedata.json();
-    // console.log(results);
+
+
+    const responsedata = await fetch('/products/newAddProduct', {
+        method: 'POST',
+        headers: {
+        },
+        body:formData
+    })
+    const results = await responsedata.json();
+    console.log(results);
     // if (results.status == 200) {
     //     alert('category added successfully');
     //     userData()
     // }
 
-    categoryname.value = ''
+    // categoryname.value = ''
     disableCreateModal()
 }
 function disableBtn() {
